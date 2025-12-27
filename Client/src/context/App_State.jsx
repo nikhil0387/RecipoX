@@ -3,7 +3,7 @@ import { AppContext } from "./App_Context";
 import axios from "axios";
 
 const App_State = (props) => {
-  const url = "https://recipox-2.onrender.com";
+  const url = " https://recipox.onrender.com";
   const [token, setToken] = useState("");
   const [recipe, setrecipe] = useState([]);
   const [savedRecipe, setsavedRecipe] = useState([]);
