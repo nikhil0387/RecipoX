@@ -1,5 +1,5 @@
 import { Recipe } from "../Models/Recipe.js";
-import{SavedRecipe} from '../Models/SavedRecipe';
+import{SavedRecipe} from '../Models/SavedRecipe.js';
 export const add =async (req,res)=>{
 
 const { title ,ist,ing1,ing2,ing3,ing4,
