@@ -1,10 +1,195 @@
-body {
-  background-color: black;
-  color: white;
+:root {
+  --primary-color: #6366f1;
+  --secondary-color: #f59e0b;
+  --bg-dark: #0f172a;
+  --bg-card: rgba(30, 41, 59, 0.7);
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --shadow-premium: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.nav{
-  display : flex;
-  justify-content : space-between;
-  align-items : center;
+body {
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  min-height: 100vh;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Glassmorphism Effect */
+.glass-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  box-shadow: var(--shadow-premium);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-dark);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}
+
+/* Navbar Customization */
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: rgba(15, 23, 42, 0.8) !important;
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--glass-border);
+  padding: 0.75rem 2rem !important;
+}
+
+.nav h2 {
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  background: linear-gradient(to right, #6366f1, #a855f7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 0;
+}
+
+/* Recipe Card Improvements */
+.recipe-card {
+  transition: var(--transition-smooth);
+  border: none !important;
+  overflow: hidden;
+  height: 100%;
+}
+
+.recipe-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(99, 102, 241, 0.3) !important;
+}
+
+.recipe-img-container {
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.recipe-img {
+  transition: var(--transition-smooth);
+  object-fit: cover;
+}
+
+.recipe-card:hover .recipe-img {
+  transform: scale(1.1);
+}
+
+/* Form Styling */
+.auth-container {
+  max-width: 450px;
+  width: 90% !important;
+  margin: 4rem auto;
+}
+
+.form-label {
+  color: #e2e8f0 !important; /* Brighter labels */
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.form-control {
+  background-color: rgba(30, 41, 59, 0.8) !important; /* Darker, more solid background */
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  color: white !important;
+  padding: 0.85rem 1.15rem !important;
+  transition: var(--transition-smooth);
+}
+
+.form-control::placeholder {
+  color: #94a3b8 !important; /* More visible placeholder */
+  opacity: 0.7;
+}
+
+.form-control:focus {
+  background-color: rgba(30, 41, 59, 1) !important;
+  border-color: var(--primary-color) !important;
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.3) !important;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%) !important;
+  border: none !important;
+  padding: 0.75rem 1.5rem !important;
+  font-weight: 600 !important;
+  transition: var(--transition-smooth) !important;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(99, 102, 241, 0.4);
+}
+
+/* Responsive Overrides */
+@media (max-width: 768px) {
+  .nav {
+    padding: 0.75rem 1rem !important;
+  }
+  
+  .right {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+  
+  .right .btn {
+    margin: 0 !important;
+    font-size: 0.85rem;
+    padding: 0.5rem 0.75rem !important;
+  }
+}
+
+/* Marquee Animation */
+.marquee-container {
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.marquee-content {
+  display: flex;
+  animation: marquee 40s linear infinite;
+  width: max-content;
+}
+
+.marquee-content:hover {
+  animation-play-state: paused;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Hero Section Adjustments */
+.hero-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-section h1 {
+  text-shadow: 0 4px 15px rgba(0,0,0,0.5);
 }

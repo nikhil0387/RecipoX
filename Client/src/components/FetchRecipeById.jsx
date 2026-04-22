@@ -29,38 +29,42 @@ const FetchRecipeById = ({ id }) => {
   if (!recipe) return <h3 className="text-light">Loading...</h3>;
 
   return (
-    <div className="text-center">
-      <div className="text-center" style={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column" }}>
-        <div className="d-flex justify-content-center align-items-center p-3">
+    <div className="recipe-card text-center h-100 d-flex flex-column">
+      <div className="p-3">
+        <div className="recipe-img-container mb-3">
           <img
             src={recipe.imgurl}
-            alt="recipe"
+            alt={recipe.title}
+            className="recipe-img w-100"
             style={{
-              width: "200px",
               height: "200px",
-              borderRadius: "10px",
-              border: "2px solid yellow",
+              borderRadius: "12px",
             }}
           />
         </div>
-        <h3>{recipe.title}</h3>
+        <h5 className="fw-bold">{recipe.title}</h5>
       </div>
 
       {location.pathname !== "/saved" && (
-        <>
-          <div className="container" style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "2rem" }}>
-            <div>
-              <h4>{recipe.ing1} - {recipe.qty1}</h4>
-              <h4>{recipe.ing2} - {recipe.qty2}</h4>
-              <h4>{recipe.ing3} - {recipe.qty3}</h4>
-              <h4>{recipe.ing4} - {recipe.qty4}</h4>
-            </div>
-            <div style={{ maxWidth: "500px" }}>
-              {recipe.ist}
-            </div>
+        <div className="card-body pt-0">
+          <div className="glass-card p-4 mt-3 text-start">
+            <h6 className="text-primary fw-bold text-uppercase small mb-3">Ingredients</h6>
+            <ul className="list-unstyled mb-4">
+              {[1, 2, 3, 4].map((num) => (
+                recipe[`ing${num}`] && (
+                  <li key={num} className="mb-1 d-flex justify-content-between">
+                    <span>{recipe[`ing${num}`]}</span>
+                    <span className="text-muted">{recipe[`qty${num}`]}</span>
+                  </li>
+                )
+              ))}
+            </ul>
+            
+            <h6 className="text-primary fw-bold text-uppercase small mb-2">Instructions</h6>
+            <p className="small text-muted">{recipe.ist}</p>
           </div>
-          <Link to="/" className="btn btn-warning my-5">Back to Home</Link>
-        </>
+          <Link to="/" className="btn btn-outline-primary mt-4 w-100">Back to Home</Link>
+        </div>
       )}
     </div>
   );

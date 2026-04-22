@@ -1,7 +1,6 @@
 import React, { useContext,useState } from "react";
 import { AppContext } from "../context/App_Context";
- import { ToastContainer, toast,Bounce } from 'react-toastify';
- import 'react-toastify/dist/ReactToastify.css';
+ import { toast, Bounce } from 'react-toastify';
  import { useNavigate } from "react-router-dom";
 
 const Login = () => {
@@ -13,8 +12,9 @@ const [password, setpassword] = useState("")
 const loginHandler = async (e)=>{
   e.preventDefault();
   const result = await login(gmail,password);
-  if (result.error) {
-    toast.error(result.message);
+  
+  if (!result.data.token) {
+    toast.error(result.data.message || "Login failed");
     return;
   }
     toast.success(result.data.message, {
@@ -36,56 +36,45 @@ transition: Bounce,
 }
   return (
     <>
-    <ToastContainer />
-      <div className="container my-5 p-5" style={{
-        "width":"500px",
-        border:"2px solid yellow",
-        borderRadius:"10px"
-      }}>
-        <h2 className="text-center">Login</h2>
-        {/* form code is taken from bootstrap */}
-        <form
-         onSubmit={loginHandler}
-        style={{
-            "width":"420px",
-            margin:"auto"
-        }}
-          className="my-3 p-3"
-        >
-          <div className="mb-3">
-            <label htmlFor="exampleInputEmail1" className="form-label">
-              Email
-            </label>
-            <input
-            value={gmail}
-            onChange={(e)=> setgmail(e.target.value)}
-              type="email"
-              className="form-control"
-              id="exampleInputEmail1"
-              aria-describedby="emailHelp"
-              required
-            />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="exampleInputPassword1" className="form-label">
-              Password
-            </label>
-            <input
-            value={password}
-            onChange={(e)=> setpassword(e.target.value)}
-              type="password"
-              className="form-control"
-              id="exampleInputPassword1"
-              required
-            />
-          </div>
-          <div className="container d-grid col-6">
-           <button type="submit" className="btn btn-primary my-3">
-           Login
-          </button>
-          </div>
-          
-        </form>
+      <div className="container d-flex justify-content-center align-items-center min-vh-100">
+        <div className="auth-container glass-card p-4 p-md-5">
+          <h2 className="text-center fw-bold mb-4">Welcome Back</h2>
+          <form onSubmit={loginHandler}>
+            <div className="mb-4">
+              <label htmlFor="exampleInputEmail1" className="form-label">
+                Email Address
+              </label>
+              <input
+                value={gmail}
+                onChange={(e) => setgmail(e.target.value)}
+                type="email"
+                className="form-control"
+                id="exampleInputEmail1"
+                placeholder="name@example.com"
+                required
+              />
+            </div>
+            <div className="mb-4">
+              <label htmlFor="exampleInputPassword1" className="form-label">
+                Password
+              </label>
+              <input
+                value={password}
+                onChange={(e) => setpassword(e.target.value)}
+                type="password"
+                className="form-control"
+                id="exampleInputPassword1"
+                placeholder="••••••••"
+                required
+              />
+            </div>
+            <div className="d-grid gap-2 mt-5">
+              <button type="submit" className="btn btn-primary">
+                Login to RecipoX
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </>
   );

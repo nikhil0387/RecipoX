@@ -15,33 +15,42 @@ const App_State = (props) => {
 
   useEffect(() => {
     const fetchRecipe = async () => {
-      const api = await axios.get(`${url}/`, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        withCredentials: true,
-      });
-      console.log(api.data.recipe);
-      setrecipe(api.data.recipe);
+      try {
+        const api = await axios.get(`${url}/`, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        });
+        setrecipe(api.data.recipe);
+      } catch (error) {
+        console.error("Error fetching recipes:", error);
+      }
     };
     fetchRecipe();
     getSavedRecipeById();
-    profile();
-    recipeByUser(userId);
     
-  }, [token,userId,reload]);
+    if (token) {
+      profile();
+    }
+    if (userId) {
+      recipeByUser(userId);
+    }
+  }, [token, userId, reload]);
 
   useEffect(() => {
-  if(token){
-    localStorage.setItem("token",token)
-  }
-  const tokenFromLocalStorage = localStorage.getItem("token",token)
-  if(tokenFromLocalStorage)
-  {
-    setToken(tokenFromLocalStorage);
-    setisAuthenticated(true)
-  }
-  }, [token,reload])
+    const tokenFromLocalStorage = localStorage.getItem("token");
+    if (tokenFromLocalStorage) {
+      setToken(tokenFromLocalStorage);
+      setisAuthenticated(true);
+    }
+  }, [reload]);
+
+  useEffect(() => {
+    if (token) {
+      localStorage.setItem("token", token);
+    }
+  }, [token]);
   
 
   // register
@@ -74,10 +83,12 @@ const App_State = (props) => {
         withCredentials: true,
       }
     );
-    setToken(api.data.token);
-    setisAuthenticated(true)
+    
+    if(api.data.token){
+      setToken(api.data.token);
+      setisAuthenticated(true);
+    }
     return api;
-    // console.log("login data ",api)
   };
 
   // addRecipe
@@ -176,8 +187,10 @@ setreload(!reload)
       withCredentials: true,
     });
     //  console.log("This is user profile ",api.data.user)
-    setuserId(api.data.user._id)
-    setuser(api.data.user)
+    if(api.data.user) {
+      setuserId(api.data.user._id)
+      setuser(api.data.user)
+    }
   }
 
   // get recipe by userId
@@ -193,7 +206,7 @@ setreload(!reload)
     setuserRecipe(api.data.recipe)
   }
   const logOut = () =>{
-    localStorage.removeItem("token",token)
+    localStorage.removeItem("token")
     setToken("")
     setisAuthenticated(false)
   }

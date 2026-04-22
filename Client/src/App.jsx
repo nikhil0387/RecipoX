@@ -9,11 +9,15 @@ import Home from './components/Home'
 import Profile from './components/Profile'
 import FetchRecipeById from "./components/FetchRecipeById";
 import Detail from "./components/Detail";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const App = () => {
   return (
     <>
       <Router>
         <Navbar />
+        <ToastContainer />
         <Routes>
 
           <Route path="/" element={<Home />} />
